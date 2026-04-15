@@ -1,0 +1,44 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    public PlayerController player;
+    EnemyController[] enemies;
+    public UIHandler uiHandler;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Lose Condition
+        if (player.health <= 0) {
+            uiHandler.DisplayLoseScreen();
+            Invoke(nameof(ReloadScene), 3f);
+        }
+
+        if (AllEnemiesFixed()) {
+            uiHandler.DisplayWinScreen();
+            Invoke(nameof(ReloadScene), 3f);
+        }
+    }
+
+    void ReloadScene() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    bool AllEnemiesFixed() {
+        foreach (EnemyController enemy in enemies) {
+            if (enemy.isBroken) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+} // END 

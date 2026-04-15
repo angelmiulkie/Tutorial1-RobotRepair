@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     Animator animator;
 
     bool broken = true;
+    public bool isBroken {get {return broken;}}
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
