@@ -28,11 +28,18 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public InputAction LaunchAction;
 
+    // Dialogue
+    public InputAction TalkAction;
+
+    // NPCDialogue
+    private NonPlayableCharacter lastNonPlayerCharacter;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         MoveAction.Enable();
         LaunchAction.Enable();
+        TalkAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
@@ -61,6 +68,17 @@ public class PlayerController : MonoBehaviour
 
         if (LaunchAction.WasPressedThisFrame()) {
             Launch();
+        }
+
+        RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, moveDirection, 1.5f, LayerMask.GetMask("NPC"));
+        if (hit.collider != null) {
+            NonPlayableCharacter npc = hit.collider.GetComponent<NonPlayableCharacter>();
+            npc.dialogueBubble.SetActive(true);
+            lastNonPlayerCharacter = npc;
+            FindFriend(hit);
+        } else if (lastNonPlayerCharacter != null) {
+            lastNonPlayerCharacter.dialogueBubble.SetActive(false);
+            lastNonPlayerCharacter = null;
         }
     }
 
@@ -92,5 +110,12 @@ public class PlayerController : MonoBehaviour
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(moveDirection, 300);
         animator.SetTrigger("Launch");
+    }
+
+    void FindFriend(RaycastHit2D hit) {
+        if (TalkAction.WasPressedThisFrame()) {
+            // Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+            UIHandler.instance.DisplayDialogue();
+        }
     }
 }
