@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="HealthBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Art/Ducko/UI/UIHealthFrame.png?fileID=21300000&amp;guid=b47cdbd2062c5e64ba5a0bf3f6b045b1&amp;type=3#UIHealthFrame&quot;); width: 350px; height: 206px; -unity-background-scale-mode: scale-to-fit; background-position-y: center; align-items: stretch; justify-content: space-between; flex-direction: column; align-self: flex-start; align-content: flex-start; translate: 10px 900px;">
+        <ui:VisualElement name="HealthBarContainer" style="flex-grow: 1; position: absolute; height: 56px; width: 190px; top: 71px; left: 144px;">
+            <ui:VisualElement name="HealthBar" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Art/Ducko/UI/UIHealthBar.png?fileID=21300000&amp;guid=39fe000f2b6d9d04b93d6a76310e29aa&amp;type=3#UIHealthBar&quot;); width: 193px;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="CharacterPortrait" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Art/SugarLand/UI/CharacterPortrait.png?fileID=21300000&amp;guid=e8af26c6841fc05459ccaf23dbab2b63&amp;type=3#CharacterPortrait&quot;); -unity-background-scale-mode: scale-to-fit; position: absolute; height: 122px; width: 159px; top: 43px; left: -1px;"/>
+    </ui:VisualElement>
+</ui:UXML>
