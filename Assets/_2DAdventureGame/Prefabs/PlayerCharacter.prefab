@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2768930285911050303}
   - component: {fileID: 2317175731752114486}
   - component: {fileID: 1266879078958230975}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,6 +154,28 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Move
       m_Flags: 8
+    m_Flags: 0
+  speed: 3
+  maxHealth: 5
+  timeInvincible: 1
+  projectilePrefab: {fileID: 809296337810638746, guid: 83f4f1cfcf3f31d49aa105d34ec90ac1,
+    type: 3}
+  LaunchAction:
+    m_Name: Launch
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1edef7e3-7609-450d-9ac5-640e59c56db7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: d3626252-83ae-4305-ae5a-9b964bf3428a
+      m_Path: <Keyboard>/c
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Launch
+      m_Flags: 0
     m_Flags: 0
 --- !u!50 &2317175731752114486
 Rigidbody2D:

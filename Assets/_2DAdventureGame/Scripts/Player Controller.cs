@@ -24,10 +24,15 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     Vector2 moveDirection = new Vector2(1, 0);
 
+    // Shooting Projectiles
+    public GameObject projectilePrefab;
+    public InputAction LaunchAction;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         MoveAction.Enable();
+        LaunchAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
@@ -53,6 +58,10 @@ public class PlayerController : MonoBehaviour
                 isInvincible = false;
             }
         }
+
+        if (LaunchAction.WasPressedThisFrame()) {
+            Launch();
+        }
     }
 
     void FixedUpdate() {
@@ -76,4 +85,11 @@ public class PlayerController : MonoBehaviour
 
     // Getters and Setters
     public int health { get { return currentHealth; }}
+
+    void Launch() {
+        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(moveDirection, 300);
+        animator.SetTrigger("Launch");
+    }
 }
