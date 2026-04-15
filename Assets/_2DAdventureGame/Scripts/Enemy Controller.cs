@@ -15,6 +15,9 @@ public class EnemyController : MonoBehaviour
     bool broken = true;
     public bool isBroken {get {return broken;}}
 
+    // Smoke Effect
+    public ParticleSystem smokeParticleEffect;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,5 +67,6 @@ public class EnemyController : MonoBehaviour
         broken = false;
         rigidbody2d.simulated = false;
         Destroy(gameObject);
+        smokeParticleEffect.Stop();
     }
 }
