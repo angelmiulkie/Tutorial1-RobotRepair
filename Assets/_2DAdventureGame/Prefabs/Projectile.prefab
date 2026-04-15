@@ -179,3 +179,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02204ba5a27ce6449946fcd707ba6fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  projectedClip: {fileID: 8300000, guid: c87de0cae68cdbb409eec8ba23a860d0, type: 3}
+  enemyClip: {fileID: 8300000, guid: 683e01d57e63fe749866ca4fd3cc424c, type: 3}

@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     // NPCDialogue
     private NonPlayableCharacter lastNonPlayerCharacter;
 
+    // Audio
+    AudioSource audioSource;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour
         TalkAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         currentHealth = maxHealth;
     
     }
@@ -117,5 +121,9 @@ public class PlayerController : MonoBehaviour
             // Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
             UIHandler.instance.DisplayDialogue();
         }
+    }
+
+    public void PlaySound(AudioClip clip) {
+        audioSource.PlayOneShot(clip);
     }
 }

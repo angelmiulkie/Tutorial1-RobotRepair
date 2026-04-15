@@ -4,6 +4,10 @@ public class Projectile : MonoBehaviour
 {
     Rigidbody2D rigidbody2d;
 
+    // Audio
+    public AudioClip projectedClip;
+    public AudioClip enemyClip;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -20,12 +24,17 @@ public class Projectile : MonoBehaviour
 
     public void Launch(Vector2 direction, float force) {
         rigidbody2d.AddForce(direction * force);
+        
+        if (projectedClip != null) {
+            AudioSource.PlayClipAtPoint(projectedClip, transform.position);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         EnemyController enemy = other.GetComponent<EnemyController>();
         if (enemy != null) {
             enemy.Fix();
+            AudioSource.PlayClipAtPoint(enemyClip, transform.position);
         }
         Debug.Log("Projectile collision with " + other.gameObject);
         Destroy(gameObject);
