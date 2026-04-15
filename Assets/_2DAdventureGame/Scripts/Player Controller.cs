@@ -13,14 +13,14 @@ public class PlayerController : MonoBehaviour
 
     // Health System
     public int maxHealth = 5;
-    int currentHealth = 4;
+    int currentHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         MoveAction.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        // currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -40,4 +40,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
     }
+
+    // Getters and Setters
+    public int health { get { return currentHealth; }}
 }
