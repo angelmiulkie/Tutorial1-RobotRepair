@@ -9,6 +9,8 @@ public class UIHandler : MonoBehaviour
 
     public float displayTime = 4.0f;
     private VisualElement m_NonPlayerDialogue;
+    private VisualElement m_NonPlayerFinishedDialogue;
+    private VisualElement m_CurrentActiveDialogue;
     private float m_TimerDisplay;
 
     // Win and Lose Screens
@@ -27,7 +29,9 @@ public class UIHandler : MonoBehaviour
         // healthBar.style.width = Length.Percent(CurrentHealth * 100.0f);
         SetHealthValue(1.00f);
         m_NonPlayerDialogue = uiDocument.rootVisualElement.Q<VisualElement>("NPCDialogue");
+        m_NonPlayerFinishedDialogue = uiDocument.rootVisualElement.Q<VisualElement>("NPCFinishedDialogue");
         m_NonPlayerDialogue.style.display = DisplayStyle.None;
+        m_NonPlayerFinishedDialogue.style.display = DisplayStyle.None;
         m_TimerDisplay = -1.0f;
 
         m_LoseScreen = uiDocument.rootVisualElement.Q<VisualElement>("LoseScreenContainer");
@@ -43,12 +47,21 @@ public class UIHandler : MonoBehaviour
             m_TimerDisplay -= Time.deltaTime;
             if (m_TimerDisplay < 0) {
                 m_NonPlayerDialogue.style.display = DisplayStyle.None;
+                m_NonPlayerFinishedDialogue.style.display = DisplayStyle.None;
+                m_CurrentActiveDialogue.style.display = DisplayStyle.None;
             }
         }
     }
 
     public void DisplayDialogue() {
+        m_NonPlayerFinishedDialogue.style.display = DisplayStyle.None; 
         m_NonPlayerDialogue.style.display = DisplayStyle.Flex;
+        m_TimerDisplay = displayTime;
+    }
+
+    public void DisplayFinishedDialogue() {
+        m_NonPlayerDialogue.style.display = DisplayStyle.None;
+        m_NonPlayerFinishedDialogue.style.display = DisplayStyle.Flex;
         m_TimerDisplay = displayTime;
     }
 
@@ -59,4 +72,27 @@ public class UIHandler : MonoBehaviour
     public void DisplayLoseScreen() {
         m_LoseScreen.style.opacity = 1.0f;
     }
+
+    public void DisplayCustomDialogue(string elementName) {
+    UIDocument uiDocument = GetComponent<UIDocument>();
+    VisualElement root = uiDocument.rootVisualElement;
+    
+    // Find the box by the name the NPC gave us
+    VisualElement customBox = root.Q<VisualElement>(elementName);
+    
+    if (customBox != null) {
+        // Hide standard ones to prevent overlap
+        if (m_CurrentActiveDialogue != null) {
+            m_CurrentActiveDialogue.style.display = DisplayStyle.None;
+        }
+
+        customBox.style.display = DisplayStyle.Flex;
+        m_CurrentActiveDialogue = customBox;
+
+        m_TimerDisplay = displayTime;
+    } else {
+        Debug.LogWarning("UIHandler: Couldn't find a UI element named " + elementName);
+    }
+}
+    
 }

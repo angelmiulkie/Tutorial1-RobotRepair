@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     // Dialogue
     public InputAction TalkAction;
+    public event Action OnTalkedToNPC;
 
     // NPCDialogue
     private NonPlayableCharacter lastNonPlayerCharacter;
@@ -77,9 +79,18 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, moveDirection, 1.5f, LayerMask.GetMask("NPC"));
         if (hit.collider != null) {
             NonPlayableCharacter npc = hit.collider.GetComponent<NonPlayableCharacter>();
-            npc.dialogueBubble.SetActive(true);
-            lastNonPlayerCharacter = npc;
-            FindFriend(hit);
+            if (npc != null) {
+                npc.dialogueBubble.SetActive(true);
+                lastNonPlayerCharacter = npc;
+
+                if (Keyboard.current.xKey.wasPressedThisFrame) {
+                    if (npc.isQuestGiver) {
+                        FindFriend(hit);
+                    } else {
+                        npc.Talk();
+                    }
+                }
+            }
         } else if (lastNonPlayerCharacter != null) {
             lastNonPlayerCharacter.dialogueBubble.SetActive(false);
             lastNonPlayerCharacter = null;
@@ -119,7 +130,8 @@ public class PlayerController : MonoBehaviour
     void FindFriend(RaycastHit2D hit) {
         if (TalkAction.WasPressedThisFrame()) {
             // Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
-            UIHandler.instance.DisplayDialogue();
+            // UIHandler.instance.DisplayDialogue();
+            OnTalkedToNPC?.Invoke();
         }
     }
 
