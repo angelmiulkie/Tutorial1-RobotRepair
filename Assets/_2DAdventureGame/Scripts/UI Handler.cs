@@ -18,7 +18,11 @@ public class UIHandler : MonoBehaviour
     private VisualElement m_LoseScreen;
 
     private void Awake() {
-        instance = this;
+        if (instance == null) {
+            instance = this;
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,7 +52,9 @@ public class UIHandler : MonoBehaviour
             if (m_TimerDisplay < 0) {
                 m_NonPlayerDialogue.style.display = DisplayStyle.None;
                 m_NonPlayerFinishedDialogue.style.display = DisplayStyle.None;
-                m_CurrentActiveDialogue.style.display = DisplayStyle.None;
+                if (m_CurrentActiveDialogue != null) {
+                    m_CurrentActiveDialogue.style.display = DisplayStyle.None;
+                }
             }
         }
     }

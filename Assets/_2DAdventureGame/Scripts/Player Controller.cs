@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
                 npc.dialogueBubble.SetActive(true);
                 lastNonPlayerCharacter = npc;
 
-                if (Keyboard.current.xKey.wasPressedThisFrame) {
+                if (TalkAction.WasPressedThisFrame()) {
                     if (npc.isQuestGiver) {
                         FindFriend(hit);
                     } else {
